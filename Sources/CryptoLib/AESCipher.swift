@@ -190,26 +190,26 @@ public struct AESCipher {
 }
 
 extension String {
-    func toHexaString() -> HexaString? {
-        let data = self.data(using: .utf8)!
+    public func toHexaString() -> HexaString? {
+        guard let data = self.data(using: .utf8) else { return nil }
         let dataWithPadding = data.addPKCS7Padding()
         return dataWithPadding.toHexaString()
     }
 }
 
 extension Data {
-    func toHexaString() -> HexaString? {
+    public func toHexaString() -> HexaString? {
         let hexaString = map { String(format: "%02 X", $0) }.joined().uppercased()
         return HexaString(hexaString: hexaString)
     }
     
-    func addPKCS7Padding(blockSize: Int = 16) -> Data {
+    public func addPKCS7Padding(blockSize: Int = 16) -> Data {
         let paddingLength = blockSize - (self.count % blockSize)
         let paddingBytes = [UInt8](repeating: UInt8(paddingLength), count: paddingLength)
         return self + Data(paddingBytes)
     }
     
-    func removePKCS7Padding() -> Data {
+    public func removePKCS7Padding() -> Data {
         guard let lastByte = self.last else { return self }
         let paddingLength = Int(lastByte)
         guard paddingLength <= self.count else { return self }

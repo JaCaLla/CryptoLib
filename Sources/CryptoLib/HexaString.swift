@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HexaString {
+public struct HexaString {
     
     private let hexaString: String
     
