@@ -11,7 +11,7 @@ public struct HexaString {
     
     private let hexaString: String
     
-    var value: String {
+    public var value: String {
         return hexaString
     }
     
