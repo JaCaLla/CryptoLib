@@ -119,14 +119,14 @@ public struct AESCipher {
     }
 
     // MARK: - Encrypt with Private Key
-    public static func encryptWithPrivateKey(message: String, privateKey: SecKey) -> Data? {
-        guard let messageData = message.data(using: .utf8) else { return nil }
+    public static func encryptWithPrivateKey(data: Data, privateKey: SecKey) -> Data? {
+       // guard let messageData = message.data(using: .utf8) else { return nil }
         
         var error: Unmanaged<CFError>?
         let encryptedData = SecKeyCreateSignature(
             privateKey,
             .rsaEncryptionPKCS1,
-            messageData as CFData,
+            data as CFData,
             &error
         )
         
@@ -134,12 +134,12 @@ public struct AESCipher {
     }
 
     // MARK: - Decrypt with Public Key
-    public static func decryptWithPublicKey(encryptedData: Data, publicKey: SecKey) -> String? {
+    public static func decryptWithPublicKey(data: Data, publicKey: SecKey) -> String? {
         var error: Unmanaged<CFError>?
         let decryptedData = SecKeyCreateDecryptedData(
             publicKey,
             .rsaEncryptionPKCS1,
-            encryptedData as CFData,
+            data as CFData,
             &error
         )
         

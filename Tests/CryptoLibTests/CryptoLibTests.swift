@@ -33,10 +33,11 @@ import CryptoKit
             
             let message = "Hello, World!"
             
-            if let encryptedData = AESCipher.encryptWithPrivateKey(message: message, privateKey: privateKey) {
+            if let data =  message.data(using: .utf8),
+                let encryptedData = AESCipher.encryptWithPrivateKey(data: data, privateKey: privateKey) {
                 print("Encrypted (with private key):", encryptedData.base64EncodedString())
                 
-                if let decryptedMessage = AESCipher.decryptWithPublicKey(encryptedData: encryptedData, publicKey: pubKeyDataBase64) {
+                if let decryptedMessage = AESCipher.decryptWithPublicKey(data: encryptedData, publicKey: pubKeyDataBase64) {
                     print("Decrypted (with public key):", decryptedMessage)
                 } else {
                     print("Failed to decrypt")
@@ -61,10 +62,11 @@ import CryptoKit
             
             let message = "Hello, World!"
             
-            if let encryptedData = AESCipher.encryptWithPrivateKey(message: message, privateKey: privateKey) {
+            if let data =  message.data(using: .utf8),
+               let encryptedData = AESCipher.encryptWithPrivateKey(data: data, privateKey: privateKey) {
                 print("Encrypted (with private key):", encryptedData.base64EncodedString())
                 
-                if let decryptedMessage = AESCipher.decryptWithPublicKey(encryptedData: encryptedData, publicKey: pubKeyDataFromHexaStr) {
+                if let decryptedMessage = AESCipher.decryptWithPublicKey(data: encryptedData, publicKey: pubKeyDataFromHexaStr) {
                     print("Decrypted (with public key):", decryptedMessage)
                 } else {
                     print("Failed to decrypt")
@@ -79,10 +81,11 @@ import CryptoKit
         if let (privateKey, publicKey) = AESCipher.generateRSAKeyPair() {
             let message = "Hello, World!"
             
-            if let encryptedData = AESCipher.encryptWithPrivateKey(message: message, privateKey: privateKey) {
+            if let data =  message.data(using: .utf8),
+               let encryptedData = AESCipher.encryptWithPrivateKey(data: data, privateKey: privateKey) {
                 print("Encrypted (with private key):", encryptedData.base64EncodedString())
                 
-                if let decryptedMessage = AESCipher.decryptWithPublicKey(encryptedData: encryptedData, publicKey: publicKey) {
+                if let decryptedMessage = AESCipher.decryptWithPublicKey(data: encryptedData, publicKey: publicKey) {
                     print("Decrypted (with public key):", decryptedMessage)
                 } else {
                     print("Failed to decrypt")
