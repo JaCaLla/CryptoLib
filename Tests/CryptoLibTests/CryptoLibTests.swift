@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 import Crypto
 import CryptoKit
@@ -15,6 +16,33 @@ import CryptoKit
     }
 }
 
+@Test func testAsymetricEncryptWitPrivateKeyDecryptWithSerializedB64() throws {
+    if let (privateKey, publicKey) = AESCipher.generateRSAKeyPair(),
+       let publicKeyData = AESCipher.convertSecKeyToData(secKey: publicKey) {
+        
+        let publicKeyDataBase64 = publicKeyData.base64EncodedString()
+        
+        guard let rawRepresentation =  Data(base64Encoded: publicKeyDataBase64),
+              let pubKeyDataBase64 = AESCipher.convertPublicKeyDataToSecKey(data: rawRepresentation) else {
+            Issue.record("Error al convertir hexa string a data")
+            return
+        }
+        
+        let message = "Hello, World!"
+        
+        if let encryptedData = AESCipher.encryptWithPrivateKey(message: message, privateKey: privateKey) {
+            print("Encrypted (with private key):", encryptedData.base64EncodedString())
+            
+            if let decryptedMessage = AESCipher.decryptWithPublicKey(encryptedData: encryptedData, publicKey: pubKeyDataBase64) {
+                print("Decrypted (with public key):", decryptedMessage)
+            } else {
+                print("Failed to decrypt")
+            }
+        } else {
+            print("Encryption failed")
+        }
+    }
+}
 
 @Test func testAsymetricEncryptWitPrivateKeyDecryptWithSerialized() throws {
     if let (privateKey, publicKey) = AESCipher.generateRSAKeyPair(),
