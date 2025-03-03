@@ -9,8 +9,10 @@ import CryptoKit
         let originalText = "Hola, mundo!"
         let originalData = originalText.data(using: .utf8)!
 
-        if let encryptedData = try await AESCipher.encryptAES(data: originalData) {
-            let decryptedData = try await AESCipher.decryptAES(encryptedData: encryptedData)
+        
+        if let key = HexaString().toData(),
+           let encryptedData = try await AESCipher.encryptAES(key: key, data: originalData) {
+            let decryptedData = try await AESCipher.decryptAES(key: key, encryptedData: encryptedData)
             #expect(originalData == decryptedData)
         } else {
             #expect(Bool(false))

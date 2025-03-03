@@ -5,26 +5,27 @@ import Crypto
 import Foundation
 
 public struct AESCipher {
-    public static func encryptAES(/*key: SymmetricKey,*/ data: Data) async throws -> Data? {
-        guard let key = await fetchMasterKey() else { return nil }
-        
+    public static func encryptAES(key: Data/*key: SymmetricKey,*/, data: Data) async throws -> Data? {
+       // guard let key = await fetchMasterKey() else { return nil }
+        let key = SymmetricKey(data: key)
         let sealedBox = try AES.GCM.seal(data, using: key)
         return sealedBox.combined!
     }
 
-    public static func decryptAES(/*key: SymmetricKey,*/ encryptedData: Data) async throws -> Data? {
-        guard let key = await fetchMasterKey() else { return nil }
+    public static func decryptAES(key: Data,/*key: SymmetricKey,*/ encryptedData: Data) async throws -> Data? {
+     //   guard let key = await fetchMasterKey() else { return nil }
+        let key = SymmetricKey(data: key)
         let sealedBox = try AES.GCM.SealedBox(combined: encryptedData)
         return try AES.GCM.open(sealedBox, using: key)
     }
     
-    private static func fetchMasterKey() async -> SymmetricKey? {
-        guard let masterKey = await Environment.fetch(key: "MASTER_KEY"),
-              let masterKeyData = HexaString(hexaString: masterKey).toData() else {
-            return nil
-        }
-        return SymmetricKey(data: masterKeyData)
-    }
+//    private static func fetchMasterKey() async -> SymmetricKey? {
+//        guard let masterKey = await Environment.fetch(key: "MASTER_KEY"),
+//              let masterKeyData = HexaString(hexaString: masterKey).toData() else {
+//            return nil
+//        }
+//        return SymmetricKey(data: masterKeyData)
+//    }
     
     public static func generateKeyPair() -> (privateKey: P256.KeyAgreement.PrivateKey, publicKey: P256.KeyAgreement.PublicKey) {
         let privateKey = P256.KeyAgreement.PrivateKey()
