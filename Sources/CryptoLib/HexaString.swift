@@ -56,7 +56,7 @@ public struct HexaString {
             return String(bytes: numbers, encoding: .utf8)
         }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         let hexString = hexaString.replacingOccurrences(of: " ", with: "")
         var data = Data(capacity: hexString.count / 2)
         
