@@ -71,7 +71,6 @@ public struct HexaString {
                 return nil
             }
         }
-        
         return data
     }
 }
