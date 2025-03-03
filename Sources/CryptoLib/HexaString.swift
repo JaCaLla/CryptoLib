@@ -15,7 +15,7 @@ public struct HexaString {
         return hexaString
     }
     
-    init(hexaString: String) {
+    public init(hexaString: String) {
 //        guard //hexaString.count == 32,
 //                HexaString.isHexadecimal(hexaString) else {
 //            return nil
@@ -23,7 +23,7 @@ public struct HexaString {
         self.hexaString = hexaString
     }
     
-    init() {
+    public init() {
         let hexagonalString = HexaString.randomHexString(length: 32)
         self.init(hexaString: hexagonalString)
     }

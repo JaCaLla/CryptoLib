@@ -7,7 +7,7 @@
 @testable import CryptoLib
 import Testing
 
-struct HexaStringUT {
+@Suite("Hexa String treatement unit test") struct HexaStringUT {
     
     @Test func initRandom() async throws {
         let hexaString = HexaString()
